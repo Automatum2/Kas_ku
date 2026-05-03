@@ -9,3 +9,41 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* Custom Styles for Kas-Ku */
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-image: url('/foto/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.font-adlam {
+    font-family: 'ADLaM Display', cursive;
+}
+
+.login-card {
+    background: #020C1B;
+    border-radius: 40px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.input-gray {
+    background: #D1D5DB;
+    color: #111827;
+}
+
+.input-gray::placeholder {
+    color: #4B5563;
+    font-weight: 600;
+    text-align: center;
+}
+
+.btn-blue {
+    background: #0D6EFD;
+}

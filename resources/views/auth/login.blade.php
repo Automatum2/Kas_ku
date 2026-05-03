@@ -1,72 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Kas-Ku</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0B0E14;
-        }
-        .login-card {
-            background: #151921;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .input-field {
-            background: #1C212C;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-        .input-field:focus {
-            border-color: #3B82F6;
-            background: #232936;
-        }
-    </style>
-</head>
-<body class="flex items-center justify-center min-h-screen p-4">
+@extends('layouts.auth')
 
-    <div class="login-card p-10 rounded-[32px] shadow-2xl w-full max-w-[440px]">
-        <div class="mb-10">
-            <h1 class="text-3xl font-bold text-white mb-2">Kas-Ku</h1>
-            <p class="text-slate-400 text-sm">Masuk untuk mengelola keuangan kelas Anda dengan mudah.</p>
+@section('title', 'Login - Kas-Ku')
+
+@section('content')
+<div class="w-full max-w-[600px] flex flex-col items-center">
+    
+    <!-- Header: Logo & Title -->
+    <div class="flex flex-col items-center mb-10">
+        <div class="flex items-center gap-4 mb-2">
+            <!-- Logo K Biru -->
+            <img src="{{asset('foto/Logo.png')}}" alt="Logo Kas-Ku" class="w-16 h-auto object-contain">
+            <h1 class="text-6xl font-adlam text-white tracking-tight">Kas-ku</h1>
         </div>
-        
+        <p class="text-white font-adlam text-center text-base px-6 leading-relaxed max-w-[520px] opacity-90">
+            Kelola iuran, pantau pengeluaran, dan bangun kepercayaan antar anggota kelas dalam satu platform yang terintegrasi.
+        </p>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-card w-full p-12 flex flex-col items-center">
+        <h2 class="text-white font-adlam text-4xl text-center leading-[1.1] mb-12">
+            Selamat<br/>
+            <span class="tracking-wide">Datang di Kas-ku !</span>
+        </h2>
+
         @if($errors->any())
-            <div class="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl mb-6 text-sm">
+            <div class="w-full bg-red-500/20 border border-red-500/50 text-red-200 p-3 rounded-xl mb-6 text-xs text-center">
                 {{ $errors->first() }}
             </div>
         @endif
 
-        <form action="{{ route('login') }}" method="POST" class="space-y-6">
+        <form action="{{ route('login') }}" method="POST" class="w-full space-y-6">
             @csrf
-            <div class="space-y-2">
-                <label for="nis" class="block text-sm font-medium text-slate-300">Nomor Induk Siswa (5 Digit)</label>
-                <input type="text" name="nis" id="nis" required maxlength="5"
-                    class="input-field w-full px-5 py-3.5 rounded-2xl outline-none transition-all placeholder:text-slate-600"
-                    placeholder="Contoh: 12345">
+            
+            <!-- Input NIS -->
+            <div class="w-full">
+                <input type="text" name="nis" required maxlength="5" value="{{ old('nis') }}"
+                    class="w-full input-gray py-4 rounded-2xl text-center font-bold text-lg outline-none focus:ring-2 ring-blue-400 transition-all placeholder:text-gray-600"
+                    placeholder="Masukkan NIS">
             </div>
 
-            <div class="space-y-2">
-                <label for="nisn" class="block text-sm font-medium text-slate-300">NISN (10 Digit)</label>
-                <input type="text" name="nisn" id="nisn" required maxlength="10"
-                    class="input-field w-full px-5 py-3.5 rounded-2xl outline-none transition-all placeholder:text-slate-600"
-                    placeholder="Contoh: 1234567890">
+            <!-- Input NISN -->
+            <div class="w-full relative">
+                <input type="password" name="nisn" id="nisn" required maxlength="10"
+                    class="w-full input-gray py-4 rounded-2xl text-center font-bold text-lg outline-none focus:ring-2 ring-blue-400 transition-all placeholder:text-gray-600"
+                    placeholder="Masukkan NISN">
+                
+                <div class="absolute right-6 top-1/2 -translate-y-1/2 cursor-pointer transition-all" onclick="togglePassword()">
+                    <div id="eye-container" class="relative flex items-center justify-center">
+                        <img src="{{ asset('foto/eye.png') }}" id="eye-img" class="w-6 h-auto opacity-70 hover:opacity-100 transition-opacity">
+                        <!-- Garis Coret (\) -->
+                        <div id="eye-slash" class="absolute w-[2px] h-6 bg-gray-900 rotate-45 transition-all"></div>
+                    </div>
+                </div>
             </div>
-            
+
+            <!-- Submit Button -->
             <button type="submit" 
-                class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-2xl font-bold text-lg transition-all shadow-lg shadow-blue-600/20 active:scale-[0.98] mt-4">
-                Masuk Sekarang
+                class="w-full btn-blue hover:bg-blue-600 text-white py-5 rounded-2xl font-adlam text-4xl mt-12 transition-all active:scale-95 shadow-xl shadow-blue-600/20">
+                Log In
             </button>
         </form>
-
-        <div class="mt-10 pt-6 border-t border-white/5 text-center">
-            <p class="text-slate-500 text-xs">Sistem Transparansi Kas-Ku &copy; 2025</p>
-            <p class="text-slate-600 text-[10px] mt-1 uppercase tracking-widest">SMKN 1 Denpasar - Kelompok 11</p>
-        </div>
     </div>
 
-</body>
-</html>
+</div>
+
+<script>
+    function togglePassword() {
+        const input = document.getElementById('nisn');
+        const slash = document.getElementById('eye-slash');
+
+        if (input.type === "password") {
+            input.type = "text";
+            slash.style.display = 'none'; // Sembunyikan coretan saat teks terlihat
+        } else {
+            input.type = "password";
+            slash.style.display = 'block'; // Tampilkan coretan saat teks tersembunyi
+        }
+    }
+</script>
+@endsection
