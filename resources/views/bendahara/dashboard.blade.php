@@ -17,37 +17,55 @@
     <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between hidden md:flex sticky top-0 h-screen">
         <div>
             <!-- Logo -->
-            <div class="px-8 py-8 flex items-center gap-3">
-                <img src="{{ asset('foto/Logo.png') }}" alt="Logo" class="w-10">
-                <span class="text-2xl font-bold text-[#003d82]">Kas-ku</span>
+            <div class="px-6 py-8 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <img src="{{ asset('foto/Logo.png') }}" alt="Logo" class="w-8">
+                    <span class="text-xl font-extrabold text-[#0047FF]">Kas-ku</span>
+                </div>
+                <!-- Toggle Sidebar Icon -->
+                <button class="text-gray-800 hover:text-black">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="4" ry="4" />
+                        <line x1="9" y1="3" x2="9" y2="21" />
+                    </svg>
+                </button>
             </div>
 
             <!-- Menu -->
-            <nav class="mt-4 px-4 space-y-2">
-                <a href="#" class="flex items-center gap-3 bg-slate-200/70 text-slate-800 px-4 py-3 rounded-2xl font-semibold transition-colors">
-                    <span class="text-xl">🏠</span> Dashboard
+            <nav class="mt-2 px-4 space-y-2">
+                <a href="{{ route('bendahara.dashboard') }}" class="flex items-center gap-3 bg-[#D3E3F1] text-[#1E293B] px-5 py-2.5 rounded-full font-bold transition-colors shadow-sm">
+                    <span class="text-xl">🏠</span>
+                    <span class="text-sm">Dashboard</span>
                 </a>
-                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-slate-800 px-4 py-3 rounded-2xl font-medium transition-colors">
-                    <span class="text-xl">📊</span> Statistik
+                <a href="#" class="flex items-center gap-3 text-gray-800 hover:text-black px-5 py-2.5 rounded-full font-semibold transition-colors">
+                    <span class="text-xl opacity-80">📊</span>
+                    <span class="text-sm">Statistik</span>
                 </a>
-                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-slate-800 px-4 py-3 rounded-2xl font-medium transition-colors">
-                    <span class="text-xl">👥</span> Data Siswa
+                <a href="#" class="flex items-center gap-3 text-gray-800 hover:text-black px-5 py-2.5 rounded-full font-semibold transition-colors">
+                    <span class="text-xl opacity-80">👥</span>
+                    <span class="text-sm">Data Siswa</span>
                 </a>
-                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-slate-800 px-4 py-3 rounded-2xl font-medium transition-colors">
-                    <span class="text-xl">⚙️</span> Pengaturan
+                <a href="#" class="flex items-center gap-3 text-gray-800 hover:text-black px-5 py-2.5 rounded-full font-semibold transition-colors">
+                    <span class="text-xl opacity-80">⚙️</span>
+                    <span class="text-sm">Pengaturan</span>
+                </a>
+                <a href="{{ route('bendahara.tentang') }}" class="flex items-center gap-3 text-gray-800 hover:text-black px-5 py-2.5 rounded-full font-semibold transition-colors">
+                    <span class="text-xl opacity-80">ℹ️</span>
+                    <span class="text-sm">Tentang</span>
                 </a>
             </nav>
         </div>
 
         <!-- Logout -->
-        <div class="p-4 mb-4">
+        <div class="p-6 mb-2">
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button type="submit" class="flex items-center gap-3 text-gray-700 hover:text-red-600 px-4 py-3 rounded-2xl font-medium transition-colors w-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                <button type="submit" class="flex items-center gap-3 text-gray-800 hover:text-black font-bold transition-colors w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF4747]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H9" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 3H5a2 2 0 00-2 2v14a2 2 0 002 2h10" />
                     </svg>
-                    <span class="text-xs font-bold text-black">Keluar</span>
+                    <span class="text-xs">Keluar</span>
                 </button>
             </form>
         </div>
@@ -63,8 +81,8 @@
                 <p class="text-gray-600 font-medium">Ringkasan keuangan dan pantau kas hari ini.</p>
             </div>
             <div class="flex items-center gap-4">
-                <button class="bg-[#003d82] hover:bg-blue-800 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-md">
-                    + Input Pemasukan
+                <button onclick="document.getElementById('qrisModal').classList.remove('hidden')" class="bg-[#003d82] hover:bg-blue-800 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-md">
+                    + Bayar Kas Sendiri
                 </button>
                 <div class="flex items-center bg-white border border-gray-200 rounded-full pr-6 pl-2 py-1.5 shadow-sm h-fit">
                     <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center mr-3 font-bold text-white text-xs">
@@ -148,17 +166,106 @@
                 </div>
             </div>
 
-            <!-- Empty space for future Charts -->
+            <!-- Pending Transactions Column -->
             <div class="md:col-span-1">
-                <div class="bg-[#E2E8F0] rounded-3xl h-full min-h-[300px] flex flex-col items-center justify-center shadow-inner mt-12 md:mt-0 p-8 text-center">
-                    <div class="w-16 h-16 bg-white/50 rounded-full flex items-center justify-center text-3xl mb-4 shadow-sm">📈</div>
-                    <span class="text-2xl font-black text-black">Analisis Grafik</span>
-                    <p class="text-slate-500 text-sm mt-2 font-medium">Data grafik pemasukan akan muncul di sini segera.</p>
+                <div class="flex justify-between items-end mb-6 mt-12 md:mt-0">
+                    <h3 class="text-xl font-extrabold text-black">Perlu Persetujuan</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    @forelse($pendingTransactions as $pending)
+                    <div class="bg-white rounded-3xl p-5 shadow-sm border border-orange-200 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-orange-400"></div>
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <p class="font-extrabold text-black">{{ $pending->user->nama_lengkap ?? 'Siswa' }}</p>
+                                <p class="text-gray-500 text-xs font-medium">{{ \Carbon\Carbon::parse($pending->tanggal)->translatedFormat('F j, Y') }}</p>
+                            </div>
+                            <span class="bg-orange-100 text-orange-600 text-[10px] font-extrabold px-2 py-1 rounded-full uppercase">Menunggu</span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <p class="text-sm text-gray-700 font-bold">Rp {{ number_format($pending->nominal, 0, ',', '.') }}</p>
+                            @if($pending->bukti_transfer)
+                                <a href="{{ asset('uploads/bukti/'.$pending->bukti_transfer) }}" target="_blank" class="text-xs text-blue-500 hover:underline inline-flex items-center mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                    Lihat Bukti Transfer
+                                </a>
+                            @endif
+                        </div>
+
+                        <div class="flex gap-2 mt-2">
+                            <form action="{{ route('bendahara.transaksi.terima', $pending->id) }}" method="POST" class="flex-1">
+                                @csrf
+                                <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white text-xs font-bold py-2 rounded-xl transition-colors shadow-sm">Terima</button>
+                            </form>
+                            <form action="{{ route('bendahara.transaksi.tolak', $pending->id) }}" method="POST" class="flex-1">
+                                @csrf
+                                <button type="submit" class="w-full bg-red-100 hover:bg-red-200 text-red-600 text-xs font-bold py-2 rounded-xl transition-colors">Tolak</button>
+                            </form>
+                        </div>
+                    </div>
+                    @empty
+                    <div class="bg-gray-50 rounded-3xl p-6 text-center border border-dashed border-gray-200">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-xl mx-auto mb-2 text-gray-400">✨</div>
+                        <p class="text-gray-500 text-sm font-medium">Semua pembayaran sudah disetujui!</p>
+                    </div>
+                    @endforelse
                 </div>
             </div>
+
+    <!-- Alert Notifikasi -->
+    @if(session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+    @endif
         </div>
 
     </main>
+
+    <!-- Modal Simulasi QRIS untuk Bendahara -->
+    <div id="qrisModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl transform transition-all relative">
+            <!-- Close Button -->
+            <button onclick="document.getElementById('qrisModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-extrabold text-[#003d82]">Pembayaran Kas Sendiri</h3>
+                <p class="text-sm text-gray-500 mt-1 font-medium">Scan QRIS ini untuk membayar kas sebesar Rp 10.000</p>
+            </div>
+
+            <!-- Dummy QR Code -->
+            <div class="flex justify-center mb-6">
+                <div class="p-4 bg-white border-2 border-dashed border-gray-300 rounded-2xl shadow-sm">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pembayaran+Kas+Dummy" alt="QRIS Dummy" class="w-40 h-40">
+                </div>
+            </div>
+
+            <!-- Form Upload Bukti -->
+            <form action="{{ route('bendahara.bayar') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-5">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Upload Bukti Transfer (Simulasi)</label>
+                    <input type="file" name="bukti_transfer" accept="image/*" required
+                        class="block w-full text-sm text-gray-500
+                        file:mr-4 file:py-2.5 file:px-4
+                        file:rounded-full file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-50 file:text-[#003d82]
+                        hover:file:bg-blue-100 transition-all cursor-pointer">
+                </div>
+
+                <button type="submit" class="w-full bg-[#003d82] text-white font-bold py-3 rounded-full hover:bg-blue-800 transition-colors shadow-md">
+                    Kirim Pembayaran
+                </button>
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>

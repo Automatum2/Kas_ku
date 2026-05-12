@@ -30,4 +30,38 @@ class DashboardController extends Controller
 
         return view('siswa.dashboard', compact('saldoKelas', 'myTransactions'));
     }
+
+    public function bayar(Request $request)
+    {
+        $request->validate([
+            'bukti_transfer' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $file = $request->file('bukti_transfer');
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+        $file->move(public_path('uploads/bukti'), $nama_file);
+
+        // Cari atau buat kategori Kas
+        $kategori = \App\Models\Category::firstOrCreate(
+            ['nama_kategori' => 'Uang Kas'],
+            ['jenis' => 'Pemasukan']
+        );
+
+        Transaction::create([
+            'user_id' => Auth::id(),
+            'category_id' => $kategori->id,
+            'tanggal' => now(),
+            'nominal' => 10000, // Hardcode 10rb untuk demo
+            'keterangan' => 'Pembayaran Kas via Simulasi QRIS',
+            'bukti_transfer' => $nama_file,
+            'status_transaksi' => 'Menunggu'
+        ]);
+
+        return redirect()->back()->with('success', 'Bukti pembayaran berhasil dikirim dan menunggu konfirmasi Bendahara.');
+    }
+
+    public function tentang()
+    {
+        return view('siswa.tentang');
+    }
 }

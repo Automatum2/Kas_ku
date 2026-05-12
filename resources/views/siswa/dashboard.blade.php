@@ -17,35 +17,45 @@
     <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between hidden md:flex sticky top-0 h-screen">
         <div>
             <!-- Logo -->
-            <div class="px-8 py-8 flex items-center gap-3">
-                <img src="{{ asset('foto/Logo.png') }}" alt="Logo" class="w-10">
-                <span class="text-2xl font-bold text-[#003d82]">Kas-ku</span>
+            <div class="px-6 py-8 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <img src="{{ asset('foto/Logo.png') }}" alt="Logo" class="w-8">
+                    <span class="text-xl font-extrabold text-[#0047FF]">Kas-ku</span>
+                </div>
+                <!-- Toggle Sidebar Icon -->
+                <button class="text-gray-800 hover:text-black">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="4" ry="4" />
+                        <line x1="9" y1="3" x2="9" y2="21" />
+                    </svg>
+                </button>
             </div>
 
             <!-- Menu -->
-            <nav class="mt-4 px-4 space-y-2">
-                <a href="#" class="flex items-center gap-3 bg-slate-200/70 text-slate-800 px-4 py-3 rounded-2xl font-semibold transition-colors">
+            <nav class="mt-2 px-4 space-y-2">
+                <a href="{{ route('siswa.dashboard') }}" class="flex items-center gap-3 bg-[#D3E3F1] text-[#1E293B] px-5 py-2.5 rounded-full font-bold transition-colors shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
-                    Dashboard
+                    <span class="text-sm">Dashboard</span>
                 </a>
-                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-slate-800 px-4 py-3 rounded-2xl font-medium transition-colors">
-                    <span class="w-5"></span> <!-- spacer -->
-                    Tentang
+                <a href="{{ route('siswa.tentang') }}" class="flex items-center gap-3 text-gray-800 hover:text-black px-5 py-2.5 rounded-full font-semibold transition-colors">
+                    <span class="w-5"></span> <!-- Spacer buat nyamain posisi tulisan Dashboard -->
+                    <span class="text-sm">Tentang</span>
                 </a>
             </nav>
         </div>
 
         <!-- Logout -->
-        <div class="p-4 mb-4">
+        <div class="p-6 mb-2">
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button type="submit" class="flex items-center gap-3 text-gray-700 hover:text-red-600 px-4 py-3 rounded-2xl font-medium transition-colors w-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                <button type="submit" class="flex items-center gap-3 text-gray-800 hover:text-black font-bold transition-colors w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF4747]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H9" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 3H5a2 2 0 00-2 2v14a2 2 0 002 2h10" />
                     </svg>
-                    <span class="text-xs font-bold text-black">Keluar</span>
+                    <span class="text-xs">Keluar</span>
                 </button>
             </form>
         </div>
@@ -82,7 +92,7 @@
                         <p class="text-white/90 text-lg drop-shadow-sm font-medium mt-1">Semakin cepat bayar semakin bagus !</p>
                     </div>
                     <div class="flex justify-center mt-auto pb-2">
-                        <button class="bg-white text-[#003d82] font-extrabold px-16 py-3 rounded-full hover:bg-gray-100 transition-colors shadow-xl text-lg">
+                        <button onclick="document.getElementById('qrisModal').classList.remove('hidden')" class="bg-white text-[#003d82] font-extrabold px-16 py-3 rounded-full hover:bg-gray-100 transition-colors shadow-xl text-lg">
                             Masuk
                         </button>
                     </div>
@@ -123,9 +133,19 @@
                         
                         <!-- Status Badge -->
                         <div class="shrink-0 mt-4 sm:mt-0">
-                            <span class="inline-block bg-[#00FF00] text-black font-extrabold px-6 py-1.5 rounded-full text-xs shadow-sm border-b-2 border-green-700/30 italic uppercase">
-                                Berhasil !
-                            </span>
+                            @if($transaction->status_transaksi == 'Lunas')
+                                <span class="inline-block bg-[#00FF00] text-black font-extrabold px-6 py-1.5 rounded-full text-xs shadow-sm border-b-2 border-green-700/30 italic uppercase">
+                                    Berhasil !
+                                </span>
+                            @elseif($transaction->status_transaksi == 'Menunggu')
+                                <span class="inline-block bg-yellow-400 text-black font-extrabold px-6 py-1.5 rounded-full text-xs shadow-sm border-b-2 border-yellow-600/30 italic uppercase">
+                                    Diproses
+                                </span>
+                            @else
+                                <span class="inline-block bg-red-500 text-white font-extrabold px-6 py-1.5 rounded-full text-xs shadow-sm border-b-2 border-red-700/30 italic uppercase">
+                                    Ditolak
+                                </span>
+                            @endif
                         </div>
                     </div>
                     @empty
@@ -149,6 +169,56 @@
         </div>
 
     </main>
+
+    <!-- Modal Simulasi QRIS -->
+    <div id="qrisModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl transform transition-all relative">
+            <!-- Close Button -->
+            <button onclick="document.getElementById('qrisModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-extrabold text-[#003d82]">Pembayaran Kas</h3>
+                <p class="text-sm text-gray-500 mt-1 font-medium">Scan QRIS ini untuk membayar kas sebesar Rp 10.000</p>
+            </div>
+
+            <!-- Dummy QR Code -->
+            <div class="flex justify-center mb-6">
+                <div class="p-4 bg-white border-2 border-dashed border-gray-300 rounded-2xl shadow-sm">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pembayaran+Kas+Dummy" alt="QRIS Dummy" class="w-40 h-40">
+                </div>
+            </div>
+
+            <!-- Form Upload Bukti -->
+            <form action="{{ route('siswa.bayar') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-5">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Upload Bukti Transfer (Simulasi)</label>
+                    <input type="file" name="bukti_transfer" accept="image/*" required
+                        class="block w-full text-sm text-gray-500
+                        file:mr-4 file:py-2.5 file:px-4
+                        file:rounded-full file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-50 file:text-[#003d82]
+                        hover:file:bg-blue-100 transition-all cursor-pointer">
+                </div>
+
+                <button type="submit" class="w-full bg-[#003d82] text-white font-bold py-3 rounded-full hover:bg-blue-800 transition-colors shadow-md">
+                    Kirim Pembayaran
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Alert Notifikasi -->
+    @if(session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+    @endif
 
 </body>
 </html>
