@@ -3,64 +3,68 @@
 @section('title', 'Login - Kas-Ku')
 
 @section('content')
-<div class="w-full max-w-[600px] flex flex-col items-center">
+<div class="flex w-full h-screen overflow-hidden font-sans">
     
-    <!-- Header: Logo & Title -->
-    <div class="flex flex-col items-center mb-10">
-        <div class="flex items-center gap-4 mb-2">
-            <!-- Logo K Biru -->
-            <img src="{{asset('foto/Logo.png')}}" alt="Logo Kas-Ku" class="w-16 h-auto object-contain">
-            <h1 class="text-6xl font-adlam text-white tracking-tight">Kas-ku</h1>
+    <div class="hidden md:flex w-1/2 bg-cover bg-center items-center justify-center p-12" 
+         style="background-image: url('{{ asset('foto/background2.png') }}');"> <div class="bg-white p-12 w-full max-w-lg shadow-2xl rounded-sm">
+            <img src="{{ asset('foto/Logo.png') }}" alt="Logo" class="w-16 mb-4">
+            
+            <h2 class="text-gray-700 italic text-xl leading-tight">
+                "Kelola Kas Kelas Lebih Transparan"
+            </h2>
+            <p class="text-gray-500 text-sm mb-32">Didirikan pada 16 April 2026</p>
+
+            <div class="mt-auto">
+                <p class="text-gray-800 font-semibold mb-1">Solusi finansial untuk kelas XI RPL 2</p>
+                <h1 class="text-6xl font-bold text-[#003d82]">Kas-ku</h1>
+            </div>
         </div>
-        <p class="text-white font-adlam text-center text-base px-6 leading-relaxed max-w-[520px] opacity-90">
-            Kelola iuran, pantau pengeluaran, dan bangun kepercayaan antar anggota kelas dalam satu platform yang terintegrasi.
-        </p>
     </div>
 
-    <!-- Login Card -->
-    <div class="login-card w-full p-12 flex flex-col items-center">
-        <h2 class="text-white font-adlam text-4xl text-center leading-[1.1] mb-12">
-            Selamat<br/>
-            <span class="tracking-wide">Datang di Kas-ku !</span>
-        </h2>
-
-        @if($errors->any())
-            <div class="w-full bg-red-500/20 border border-red-500/50 text-red-200 p-3 rounded-xl mb-6 text-xs text-center">
-                {{ $errors->first() }}
-            </div>
-        @endif
-
-        <form action="{{ route('login') }}" method="POST" class="w-full space-y-6">
-            @csrf
+    <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center px-8 md:px-24">
+        <div class="w-full max-w-md text-center">
             
-            <!-- Input NIS -->
-            <div class="w-full">
-                <input type="text" name="nis" required maxlength="5" value="{{ old('nis') }}"
-                    class="w-full input-gray py-4 rounded-2xl text-center font-bold text-lg outline-none focus:ring-2 ring-blue-400 transition-all placeholder:text-gray-600"
-                    placeholder="Masukkan NIS">
+            <div class="flex items-center justify-center gap-3 mb-6">
+                <img src="{{ asset('foto/Logo.png') }}" alt="Logo" class="w-12 h-auto">
+                <span class="text-3xl font-bold text-[#003d82]">Kas-ku</span>
             </div>
 
-            <!-- Input NISN -->
-            <div class="w-full relative">
-                <input type="password" name="nisn" id="nisn" required maxlength="10"
-                    class="w-full input-gray py-4 rounded-2xl text-center font-bold text-lg outline-none focus:ring-2 ring-blue-400 transition-all placeholder:text-gray-600"
-                    placeholder="Masukkan NISN">
+            <h3 class="text-2xl font-bold text-gray-800 mb-8 uppercase tracking-tight">Log In ke akun anda</h3>
+
+            @if($errors->any())
+                <div class="w-full bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-lg mb-6 text-sm text-center italic">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+
+            <form action="{{ route('login') }}" method="POST" class="space-y-5">
+                @csrf
                 
-                <div class="absolute right-6 top-1/2 -translate-y-1/2 cursor-pointer transition-all" onclick="togglePassword()">
-                    <div id="eye-container" class="relative flex items-center justify-center">
-                        <img src="{{ asset('foto/eye.png') }}" id="eye-img" class="w-6 h-auto opacity-70 hover:opacity-100 transition-opacity">
-                        <!-- Garis Coret (\) -->
-                        <div id="eye-slash" class="absolute w-[2px] h-6 bg-gray-900 rotate-45 transition-all"></div>
+                <div class="text-left">
+                    <input type="text" name="nis" required maxlength="5" value="{{ old('nis') }}"
+                        class="w-full px-4 py-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-800 transition-all placeholder:text-gray-400"
+                        placeholder="Masukkan NIS">
+                </div>
+
+                <div class="text-left relative">
+                    <input type="password" name="nisn" id="nisn" required maxlength="10"
+                        class="w-full px-4 py-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-800 transition-all placeholder:text-gray-400"
+                        placeholder="Masukkan NISN">
+                    
+                    <div class="absolute inset-y-0 right-4 flex items-center cursor-pointer" onclick="togglePassword()">
+                        <div id="eye-container" class="relative flex items-center justify-center">
+                            <img src="{{ asset('foto/eye.png') }}" id="eye-img" class="w-6 opacity-50 hover:opacity-100 transition-opacity">
+                            <div id="eye-slash" class="absolute w-[2px] h-6 bg-gray-800 rotate-45 transition-all" style="display: block;"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Submit Button -->
-            <button type="submit" 
-                class="w-full btn-blue hover:bg-blue-600 text-white py-5 rounded-2xl font-adlam text-4xl mt-12 transition-all active:scale-95 shadow-xl shadow-blue-600/20">
-                Log In
-            </button>
-        </form>
+                <button type="submit" 
+                    class="w-full bg-[#003d82] hover:bg-blue-900 text-white font-bold py-4 px-4 rounded shadow-md transition duration-300 uppercase tracking-widest text-sm mt-4">
+                    Lanjutkan
+                </button>
+            </form>
+        </div>
     </div>
 
 </div>
@@ -72,10 +76,10 @@
 
         if (input.type === "password") {
             input.type = "text";
-            slash.style.display = 'none'; // Sembunyikan coretan saat teks terlihat
+            slash.style.display = 'none';
         } else {
             input.type = "password";
-            slash.style.display = 'block'; // Tampilkan coretan saat teks tersembunyi
+            slash.style.display = 'block';
         }
     }
 </script>
