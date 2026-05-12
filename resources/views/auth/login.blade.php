@@ -42,13 +42,15 @@
                 
                 <div class="text-left">
                     <input type="text" name="nis" required maxlength="5" value="{{ old('nis') }}"
-                        class="w-full px-4 py-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-800 transition-all placeholder:text-gray-400"
+                        inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        class="w-full px-4 py-4 text-gray-900 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-800 transition-all placeholder:text-gray-400"
                         placeholder="Masukkan NIS">
                 </div>
 
                 <div class="text-left relative">
                     <input type="password" name="nisn" id="nisn" required maxlength="10"
-                        class="w-full px-4 py-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-800 transition-all placeholder:text-gray-400"
+                        inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        class="w-full px-4 py-4 text-gray-900 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-800 transition-all placeholder:text-gray-400"
                         placeholder="Masukkan NISN">
                     
                     <div class="absolute inset-y-0 right-4 flex items-center cursor-pointer" onclick="togglePassword()">
