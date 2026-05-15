@@ -1,126 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang Kas-Ku</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="{{ asset('foto/Logo.png') }}">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; color: #1E293B; }
-    </style>
-</head>
-<body class="flex min-h-screen">
+@extends('layouts.main')
 
-    <!-- Sidebar -->
-    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between hidden md:flex sticky top-0 h-screen">
-        <div>
-            <!-- Logo -->
-            <div class="px-6 py-8 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <img src="{{ asset('foto/Logo.png') }}" alt="Logo" class="w-8">
-                    <span class="text-xl font-extrabold text-[#0047FF]">Kas-ku</span>
-                </div>
-                <!-- Toggle Sidebar Icon -->
-                <button class="text-gray-800 hover:text-black">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <rect x="3" y="3" width="18" height="18" rx="4" ry="4" />
-                        <line x1="9" y1="3" x2="9" y2="21" />
-                    </svg>
-                </button>
-            </div>
+@section('title', 'Tentang Kas-Ku')
 
-            <!-- Menu -->
-            <nav class="mt-2 px-4 space-y-2">
-                <a href="{{ route('siswa.dashboard') }}" class="flex items-center gap-3 text-gray-800 hover:text-black px-5 py-2.5 rounded-full font-semibold transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    <span class="text-sm">Dashboard</span>
-                </a>
-                <a href="{{ route('siswa.tentang') }}" class="flex items-center gap-3 bg-[#D3E3F1] text-[#1E293B] px-5 py-2.5 rounded-full font-bold transition-colors shadow-sm">
-                    <span class="w-5"></span> <!-- Spacer buat nyamain posisi tulisan Dashboard -->
-                    <span class="text-sm">Tentang</span>
-                </a>
-            </nav>
+@section('header_title', 'Tentang Kas-ku')
+@section('header_subtitle', 'Membangun Budaya Jujur dari Kelas')
+
+@section('content')
+<div class="max-w-6xl mx-auto">
+    <!-- Image Gallery -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
+        <div class="rounded-[2.5rem] overflow-hidden shadow-2xl h-[400px] border-4 border-white">
+            <img src="{{ asset('foto/tentang/bayar kas 2.png') }}" alt="Tentang 1" class="w-full h-full object-cover">
+        </div>
+        <div class="rounded-[2.5rem] overflow-hidden shadow-2xl h-[400px] border-4 border-white">
+            <img src="{{ asset('foto/tentang/bayar qris 2.png') }}" alt="Tentang 2" class="w-full h-full object-cover">
+        </div>
+    </div>
+
+    <!-- Description Text -->
+    <div class="space-y-12 text-center px-4 md:px-20">
+        <div class="space-y-6">
+            <p class="text-2xl font-black text-gray-900 leading-tight">
+                Transparansi Mutlak: Menghilangkan keraguan anggota kelas dengan pencatatan pengeluaran yang bisa dilihat siapa saja dan kapan saja.
+            </p>
+            <p class="text-2xl font-black text-gray-900 leading-tight">
+                Efisiensi Bendahara: Membantu bendahara mengelola tunggakan secara otomatis tanpa perlu mencatat manual di buku yang rawan hilang.
+            </p>
+            <p class="text-2xl font-black text-gray-900 leading-tight">
+                Kedisiplinan Siswa: Sistem pengingat yang membantu siswa untuk lebih tepat waktu dalam mendukung pendanaan kegiatan kelas.
+            </p>
         </div>
 
-        <!-- Logout -->
-        <div class="p-6 mb-2">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="flex items-center gap-3 text-gray-800 hover:text-black font-bold transition-colors w-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF4747]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H9" />
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 3H5a2 2 0 00-2 2v14a2 2 0 002 2h10" />
-                    </svg>
-                    <span class="text-xs">Keluar</span>
-                </button>
-            </form>
+        <div class="pt-8">
+            <p class="text-3xl font-black text-gray-900 leading-snug">
+                Kas-Ku hadir sebagai solusi digital untuk mengatasi masalah klasik pendidikan: pengelolaan dana yang tidak transparan. Kami percaya, kejujuran dimulai dari hal kecil seperti uang kas.
+            </p>
         </div>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="flex-1 p-8 md:p-12 overflow-y-auto bg-[#F8FAFC]">
-        
-        <!-- Header -->
-        <header class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 border-b border-gray-200 pb-8">
-            <div>
-                <h1 class="text-3xl font-black text-black mb-1 tracking-tight">Tentang Kas-ku</h1>
-                <p class="text-gray-600 font-medium text-lg">Membangun Budaya Jujur dari Kelas</p>
-            </div>
-            <div class="flex items-center bg-white border border-gray-300 rounded-full pr-6 pl-2 py-1.5 shadow-sm h-fit">
-                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center mr-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <span class="text-sm font-semibold text-gray-700">Terdaftar sebagai <span class="font-bold text-black">Siswa</span></span>
-            </div>
-        </header>
-
-        <!-- Images Section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-5xl mx-auto">
-            <div class="rounded-3xl overflow-hidden shadow-xl h-[350px] bg-gray-200">
-                <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" alt="Siswa sedang berinteraksi" class="w-full h-full object-cover">
-            </div>
-            <div class="rounded-3xl overflow-hidden shadow-xl h-[350px] bg-gray-200">
-                <img src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?auto=format&fit=crop&w=800&q=80" alt="Scan QRIS" class="w-full h-full object-cover">
-            </div>
-        </div>
-
-        <!-- Description Section -->
-        <div class="max-w-4xl mx-auto text-center px-4 mb-20">
-            <div class="space-y-3 mb-16">
-                <p class="text-xl md:text-2xl font-black text-black leading-tight">
-                    Transparansi Mutlak: Menghilangkan keraguan anggota<br>
-                    kelas dengan pencatatan pengeluaran yang bisa dilihat<br>
-                    siapa saja dan kapan saja.
-                </p>
-                <p class="text-xl md:text-2xl font-black text-black leading-tight">
-                    Efisiensi Bendahara: Membantu bendahara mengelola<br>
-                    tunggakan secara otomatis tanpa perlu mencatat manual<br>
-                    di buku yang rawan hilang.
-                </p>
-                <p class="text-xl md:text-2xl font-black text-black leading-tight">
-                    Kedisiplinan Siswa: Sistem pengingat yang membantu<br>
-                    siswa untuk lebih tepat waktu dalam mendukung<br>
-                    pendanaan kegiatan kelas.
-                </p>
-            </div>
-
-            <div class="pt-8">
-                <p class="text-2xl md:text-[28px] font-black text-black leading-snug tracking-tight">
-                    Kas-Ku hadir sebagai solusi digital untuk mengatasi<br>
-                    masalah klasik pendidikan: pengelolaan dana yang<br>
-                    tidak transparan. Kami percaya, kejujuran dimulai<br>
-                    dari hal kecil seperti uang kas.
-                </p>
-            </div>
-        </div>
-
-    </main>
-
-</body>
-</html>
+    </div>
+</div>
+@endsection

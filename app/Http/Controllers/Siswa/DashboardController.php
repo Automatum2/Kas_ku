@@ -28,7 +28,17 @@ class DashboardController extends Controller
             ->orderBy('tanggal', 'desc')
             ->get();
 
-        return view('siswa.dashboard', compact('saldoKelas', 'myTransactions'));
+        // Peringkat Siswa Rajin (6 Bulan Terakhir)
+        $rankingSiswa = Transaction::where('status_transaksi', 'Lunas')
+            ->where('tanggal', '>=', now()->subMonths(6))
+            ->selectRaw('user_id, count(*) as total_bayar')
+            ->groupBy('user_id')
+            ->orderByDesc('total_bayar')
+            ->with('user')
+            ->take(3)
+            ->get();
+
+        return view('siswa.dashboard', compact('saldoKelas', 'myTransactions', 'rankingSiswa'));
     }
 
     public function bayar(Request $request)

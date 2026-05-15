@@ -1,271 +1,190 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Bendahara - Kas-Ku</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="{{ asset('foto/Logo.png') }}">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; color: #1E293B; }
-    </style>
-</head>
-<body class="flex min-h-screen">
+@extends('layouts.main')
 
-    <!-- Sidebar -->
-    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between hidden md:flex sticky top-0 h-screen">
-        <div>
-            <!-- Logo -->
-            <div class="px-6 py-8 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <img src="{{ asset('foto/Logo.png') }}" alt="Logo" class="w-8">
-                    <span class="text-xl font-extrabold text-[#0047FF]">Kas-ku</span>
-                </div>
-                <!-- Toggle Sidebar Icon -->
-                <button class="text-gray-800 hover:text-black">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <rect x="3" y="3" width="18" height="18" rx="4" ry="4" />
-                        <line x1="9" y1="3" x2="9" y2="21" />
-                    </svg>
-                </button>
-            </div>
+@section('title', 'Dashboard Bendahara - Kas-Ku')
 
-            <!-- Menu -->
-            <nav class="mt-2 px-4 space-y-2">
-                <a href="{{ route('bendahara.dashboard') }}" class="flex items-center gap-3 bg-[#D3E3F1] text-[#1E293B] px-5 py-2.5 rounded-full font-bold transition-colors shadow-sm">
-                    <span class="text-xl">🏠</span>
-                    <span class="text-sm">Dashboard</span>
-                </a>
-                <a href="#" class="flex items-center gap-3 text-gray-800 hover:text-black px-5 py-2.5 rounded-full font-semibold transition-colors">
-                    <span class="text-xl opacity-80">📊</span>
-                    <span class="text-sm">Statistik</span>
-                </a>
-                <a href="#" class="flex items-center gap-3 text-gray-800 hover:text-black px-5 py-2.5 rounded-full font-semibold transition-colors">
-                    <span class="text-xl opacity-80">👥</span>
-                    <span class="text-sm">Data Siswa</span>
-                </a>
-                <a href="#" class="flex items-center gap-3 text-gray-800 hover:text-black px-5 py-2.5 rounded-full font-semibold transition-colors">
-                    <span class="text-xl opacity-80">⚙️</span>
-                    <span class="text-sm">Pengaturan</span>
-                </a>
-                <a href="{{ route('bendahara.tentang') }}" class="flex items-center gap-3 text-gray-800 hover:text-black px-5 py-2.5 rounded-full font-semibold transition-colors">
-                    <span class="text-xl opacity-80">ℹ️</span>
-                    <span class="text-sm">Tentang</span>
-                </a>
-            </nav>
-        </div>
-
-        <!-- Logout -->
-        <div class="p-6 mb-2">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="flex items-center gap-3 text-gray-800 hover:text-black font-bold transition-colors w-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF4747]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H9" />
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 3H5a2 2 0 00-2 2v14a2 2 0 002 2h10" />
-                    </svg>
-                    <span class="text-xs">Keluar</span>
-                </button>
-            </form>
-        </div>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="flex-1 p-8 md:p-12 overflow-y-auto">
-        
-        <!-- Header -->
-        <header class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+@section('content')
+<!-- Top Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+    <!-- Card 1: Pantau Saldo -->
+    <div class="md:col-span-2 relative rounded-[2.5rem] overflow-hidden h-80 shadow-2xl group bg-blue-900 border-4 border-white">
+        <img src="{{ asset('foto/mulai-bayar/image 27.png?v=1') }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60">
+        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent"></div>
+        <div class="absolute inset-0 p-12 flex flex-col justify-between z-10">
             <div>
-                <h1 class="text-3xl font-extrabold text-black mb-1 tracking-tight">Selamat datang, {{ Auth::user()->nama_lengkap }} !</h1>
-                <p class="text-gray-600 font-medium">Ringkasan keuangan dan pantau kas hari ini.</p>
+                <p class="text-blue-200 text-sm font-black uppercase tracking-[0.3em] drop-shadow-md">Saldo Saat Ini</p>
+                <h2 class="text-6xl font-black text-white drop-shadow-2xl tracking-tighter mt-4">Rp {{ number_format($saldoAkhir, 0, ',', '.') }}</h2>
             </div>
-            <div class="flex items-center gap-4">
-                <button onclick="document.getElementById('qrisModal').classList.remove('hidden')" class="bg-[#003d82] hover:bg-blue-800 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-md">
-                    + Bayar Kas Sendiri
+            <div class="flex items-center gap-6">
+                <button onclick="document.getElementById('qrisModal').classList.remove('hidden')" 
+                    class="bg-white text-[#003d82] font-black px-12 py-4 rounded-2xl hover:bg-gray-50 transition-all shadow-2xl text-base transform hover:scale-105 active:scale-95 uppercase tracking-widest">
+                    + Bayar Sendiri
                 </button>
-                <div class="flex items-center bg-white border border-gray-200 rounded-full pr-6 pl-2 py-1.5 shadow-sm h-fit">
-                    <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center mr-3 font-bold text-white text-xs">
-                        B
-                    </div>
-                    <span class="text-sm font-semibold text-gray-700">Terdaftar sebagai <span class="font-bold text-black">Bendahara</span></span>
+                <div class="bg-green-500/20 backdrop-blur-md border border-green-500/30 px-6 py-3 rounded-2xl">
+                    <p class="text-green-400 font-black text-sm tracking-widest uppercase">+2.4% <span class="text-white/70 font-bold ml-1">Bulan ini</span></p>
                 </div>
             </div>
-        </header>
-
-        <!-- Top Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <!-- Card 1: Pantau Saldo (takes 2 columns) -->
-            <div class="md:col-span-2 relative rounded-3xl overflow-hidden h-64 shadow-lg group">
-                <img src="{{ asset('foto/bayar kas 2.png') }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute inset-0 bg-blue-900/40 mix-blend-multiply"></div>
-                <div class="absolute inset-0 p-8 flex flex-col justify-between">
-                    <div>
-                        <p class="text-blue-100 text-sm font-bold uppercase tracking-widest drop-shadow-md">Pantau Saldo</p>
-                        <h2 class="text-5xl font-extrabold text-white drop-shadow-md mt-2">Rp {{ number_format($saldoAkhir, 0, ',', '.') }}</h2>
-                        <p class="text-white/90 text-sm drop-shadow-sm font-medium mt-3 bg-white/20 inline-block px-3 py-1 rounded-full">+2.4% dari bulan lalu</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 & 3 Column -->
-            <div class="grid grid-rows-2 gap-6 h-64">
-                <!-- Statistik Kelas -->
-                <div class="bg-white rounded-3xl p-6 flex flex-col justify-center shadow-md border border-gray-100 relative overflow-hidden group">
-                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1 relative z-10">Statistik Kelas</p>
-                    <h3 class="text-3xl font-extrabold text-green-500 relative z-10">92%</h3>
-                    <p class="text-xs text-slate-500 mt-1 relative z-10">Siswa sudah membayar bulan ini</p>
-                    <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-green-500/10 rounded-full group-hover:scale-150 transition-all duration-500"></div>
-                </div>
-
-                <!-- Daftar Tunggakan -->
-                <div class="bg-white rounded-3xl p-6 flex flex-col justify-center shadow-md border border-gray-100 relative overflow-hidden group">
-                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1 text-red-400/70 relative z-10">Daftar Tunggakan</p>
-                    <h3 class="text-3xl font-extrabold text-red-500 relative z-10">4 <span class="text-lg font-bold text-slate-600">Siswa</span></h3>
-                    <p class="text-xs text-blue-500 mt-1 hover:underline cursor-pointer relative z-10">Lihat Detail &rarr;</p>
-                    <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-red-500/10 rounded-full group-hover:scale-150 transition-all duration-500"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- History Column -->
-            <div class="md:col-span-2">
-                <div class="flex justify-between items-end mb-6">
-                    <h3 class="text-xl font-extrabold text-black">Transaksi Terakhir</h3>
-                    <a href="#" class="text-[#003d82] font-bold text-sm hover:underline">Lihat Semua</a>
-                </div>
-                
-                <div class="space-y-4">
-                    @forelse($recentTransactions as $transaction)
-                    <div class="bg-white rounded-3xl p-5 flex flex-col sm:flex-row items-center shadow-sm border border-gray-100">
-                        <!-- Icon -->
-                        <div class="w-12 h-12 rounded-full {{ $transaction->category->jenis == 'Pemasukan' ? 'bg-green-500' : 'bg-red-500' }} flex items-center justify-center shrink-0 sm:mr-4 mb-3 sm:mb-0">
-                            <span class="text-white font-bold text-xl">{{ $transaction->category->jenis == 'Pemasukan' ? '+' : '-' }}</span>
-                        </div>
-                        
-                        <!-- Details -->
-                        <div class="flex-1 text-center sm:text-left">
-                            <p class="font-extrabold text-black text-lg">{{ $transaction->user->nama_lengkap ?? 'Kas Umum' }}</p>
-                            <p class="text-gray-500 text-sm font-medium mt-0.5">{{ $transaction->category->nama_kategori }} • {{ \Carbon\Carbon::parse($transaction->tanggal)->translatedFormat('F j, Y') }}</p>
-                        </div>
-                        
-                        <!-- Status Badge -->
-                        <div class="shrink-0 mt-4 sm:mt-0 text-right">
-                            <p class="font-extrabold text-xl {{ $transaction->category->jenis == 'Pemasukan' ? 'text-green-500' : 'text-red-500' }}">
-                                {{ $transaction->category->jenis == 'Pemasukan' ? '+' : '-' }} Rp {{ number_format($transaction->nominal, 0, ',', '.') }}
-                            </p>
-                        </div>
-                    </div>
-                    @empty
-                    <div class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100">
-                        <p class="text-gray-500 font-medium">Belum ada transaksi terakhir.</p>
-                    </div>
-                    @endforelse
-                </div>
-            </div>
-
-            <!-- Pending Transactions Column -->
-            <div class="md:col-span-1">
-                <div class="flex justify-between items-end mb-6 mt-12 md:mt-0">
-                    <h3 class="text-xl font-extrabold text-black">Perlu Persetujuan</h3>
-                </div>
-                
-                <div class="space-y-4">
-                    @forelse($pendingTransactions as $pending)
-                    <div class="bg-white rounded-3xl p-5 shadow-sm border border-orange-200 relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-orange-400"></div>
-                        <div class="flex justify-between items-start mb-2">
-                            <div>
-                                <p class="font-extrabold text-black">{{ $pending->user->nama_lengkap ?? 'Siswa' }}</p>
-                                <p class="text-gray-500 text-xs font-medium">{{ \Carbon\Carbon::parse($pending->tanggal)->translatedFormat('F j, Y') }}</p>
-                            </div>
-                            <span class="bg-orange-100 text-orange-600 text-[10px] font-extrabold px-2 py-1 rounded-full uppercase">Menunggu</span>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <p class="text-sm text-gray-700 font-bold">Rp {{ number_format($pending->nominal, 0, ',', '.') }}</p>
-                            @if($pending->bukti_transfer)
-                                <a href="{{ asset('uploads/bukti/'.$pending->bukti_transfer) }}" target="_blank" class="text-xs text-blue-500 hover:underline inline-flex items-center mt-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                                    Lihat Bukti Transfer
-                                </a>
-                            @endif
-                        </div>
-
-                        <div class="flex gap-2 mt-2">
-                            <form action="{{ route('bendahara.transaksi.terima', $pending->id) }}" method="POST" class="flex-1">
-                                @csrf
-                                <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white text-xs font-bold py-2 rounded-xl transition-colors shadow-sm">Terima</button>
-                            </form>
-                            <form action="{{ route('bendahara.transaksi.tolak', $pending->id) }}" method="POST" class="flex-1">
-                                @csrf
-                                <button type="submit" class="w-full bg-red-100 hover:bg-red-200 text-red-600 text-xs font-bold py-2 rounded-xl transition-colors">Tolak</button>
-                            </form>
-                        </div>
-                    </div>
-                    @empty
-                    <div class="bg-gray-50 rounded-3xl p-6 text-center border border-dashed border-gray-200">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-xl mx-auto mb-2 text-gray-400">✨</div>
-                        <p class="text-gray-500 text-sm font-medium">Semua pembayaran sudah disetujui!</p>
-                    </div>
-                    @endforelse
-                </div>
-            </div>
-
-    <!-- Alert Notifikasi -->
-    @if(session('success'))
-    <script>
-        alert("{{ session('success') }}");
-    </script>
-    @endif
-        </div>
-
-    </main>
-
-    <!-- Modal Simulasi QRIS untuk Bendahara -->
-    <div id="qrisModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center hidden">
-        <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl transform transition-all relative">
-            <!-- Close Button -->
-            <button onclick="document.getElementById('qrisModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-
-            <div class="text-center mb-6">
-                <h3 class="text-2xl font-extrabold text-[#003d82]">Pembayaran Kas Sendiri</h3>
-                <p class="text-sm text-gray-500 mt-1 font-medium">Scan QRIS ini untuk membayar kas sebesar Rp 10.000</p>
-            </div>
-
-            <!-- Dummy QR Code -->
-            <div class="flex justify-center mb-6">
-                <div class="p-4 bg-white border-2 border-dashed border-gray-300 rounded-2xl shadow-sm">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pembayaran+Kas+Dummy" alt="QRIS Dummy" class="w-40 h-40">
-                </div>
-            </div>
-
-            <!-- Form Upload Bukti -->
-            <form action="{{ route('bendahara.bayar') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="mb-5">
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Upload Bukti Transfer (Simulasi)</label>
-                    <input type="file" name="bukti_transfer" accept="image/*" required
-                        class="block w-full text-sm text-gray-500
-                        file:mr-4 file:py-2.5 file:px-4
-                        file:rounded-full file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-blue-50 file:text-[#003d82]
-                        hover:file:bg-blue-100 transition-all cursor-pointer">
-                </div>
-
-                <button type="submit" class="w-full bg-[#003d82] text-white font-bold py-3 rounded-full hover:bg-blue-800 transition-colors shadow-md">
-                    Kirim Pembayaran
-                </button>
-            </form>
         </div>
     </div>
 
-</body>
-</html>
+    <!-- Right Side Stats (Replacing Tabungan Kelas card for Treasurer) -->
+    <div class="flex flex-col gap-8 h-80">
+        <!-- Statistik -->
+        <div class="flex-1 bg-white rounded-[2.5rem] p-8 shadow-sm border-2 border-gray-50 relative overflow-hidden group hover:shadow-xl transition-all duration-500">
+            <div class="relative z-10">
+                <p class="text-gray-400 text-xs font-black uppercase tracking-[0.2em] mb-2">Partisipasi Kelas</p>
+                <h3 class="text-4xl font-black text-[#0047FF] tracking-tighter">92%</h3>
+                <p class="text-gray-500 font-bold text-sm mt-1">Siswa sudah lunas kas bulan ini</p>
+            </div>
+            <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-blue-50 rounded-full group-hover:scale-150 transition-all duration-700"></div>
+        </div>
+
+        <!-- Tunggakan -->
+        <div class="flex-1 bg-white rounded-[2.5rem] p-8 shadow-sm border-2 border-gray-50 relative overflow-hidden group hover:shadow-xl transition-all duration-500">
+            <div class="relative z-10">
+                <p class="text-red-400 text-xs font-black uppercase tracking-[0.2em] mb-2">Tunggakan</p>
+                <h3 class="text-4xl font-black text-red-500 tracking-tighter">4 <span class="text-lg font-bold text-gray-400 ml-1">Siswa</span></h3>
+                <a href="#" class="text-blue-500 font-black text-xs uppercase tracking-widest mt-2 hover:underline inline-block">Lihat Detail &rarr;</a>
+            </div>
+            <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-red-50 rounded-full group-hover:scale-150 transition-all duration-700"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Bottom Section Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <!-- Transactions Column -->
+    <div class="md:col-span-2">
+        <div class="flex justify-between items-end mb-8">
+            <h3 class="text-3xl font-black text-gray-900 tracking-tighter">Transaksi Terakhir</h3>
+            <a href="#" class="text-[#0047FF] font-black text-sm uppercase tracking-widest hover:underline">Lihat Semua</a>
+        </div>
+        
+        <div class="space-y-6">
+            @forelse($recentTransactions as $transaction)
+            <div class="bg-white rounded-[2.5rem] p-8 flex flex-col sm:flex-row items-center shadow-sm border-2 border-gray-50 hover:shadow-xl transition-all duration-500 group">
+                <!-- Icon Box -->
+                <div class="w-16 h-16 rounded-2xl {{ $transaction->category->jenis == 'Pemasukan' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600' }} flex items-center justify-center shrink-0 sm:mr-8 mb-4 sm:mb-0 shadow-sm group-hover:rotate-6 transition-transform">
+                    <span class="text-2xl font-black">{{ $transaction->category->jenis == 'Pemasukan' ? '+' : '-' }}</span>
+                </div>
+                
+                <!-- Details -->
+                <div class="flex-1 text-center sm:text-left">
+                    <p class="font-black text-gray-900 text-2xl tracking-tight">{{ $transaction->user->nama_lengkap ?? 'Kas Umum' }}</p>
+                    <p class="text-gray-400 text-lg font-bold mt-1">{{ $transaction->category->nama_kategori }} • {{ \Carbon\Carbon::parse($transaction->tanggal)->translatedFormat('F j, Y') }}</p>
+                </div>
+                
+                <!-- Amount -->
+                <div class="shrink-0 mt-5 sm:mt-0 text-right">
+                    <p class="font-black text-2xl {{ $transaction->category->jenis == 'Pemasukan' ? 'text-green-500' : 'text-red-500' }} tracking-tighter">
+                        {{ $transaction->category->jenis == 'Pemasukan' ? '+' : '-' }} Rp {{ number_format($transaction->nominal, 0, ',', '.') }}
+                    </p>
+                </div>
+            </div>
+            @empty
+            <div class="bg-white rounded-[2.5rem] p-16 text-center shadow-sm border-2 border-dashed border-gray-100">
+                <p class="text-gray-300 font-black text-2xl">Belum ada transaksi.</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+
+    <!-- Approval Column -->
+    <div class="md:col-span-1">
+        <h3 class="text-3xl font-black text-gray-900 mb-8 tracking-tighter">Persetujuan</h3>
+        
+        <div class="space-y-6">
+            @forelse($pendingTransactions as $pending)
+            <div class="bg-white rounded-[2rem] p-8 shadow-sm border-2 border-orange-100 relative overflow-hidden hover:shadow-xl transition-all duration-500">
+                <div class="absolute top-0 left-0 w-2 h-full bg-orange-400"></div>
+                
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <p class="font-black text-gray-900 text-xl tracking-tight">{{ $pending->user->nama_lengkap ?? 'Siswa' }}</p>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mt-1">{{ \Carbon\Carbon::parse($pending->tanggal)->translatedFormat('F j, Y') }}</p>
+                    </div>
+                    <span class="bg-orange-50 text-orange-600 text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-widest border border-orange-100 italic">Menunggu</span>
+                </div>
+                
+                <div class="mb-6">
+                    <p class="text-2xl font-black text-black tracking-tighter">Rp {{ number_format($pending->nominal, 0, ',', '.') }}</p>
+                    @if($pending->bukti_transfer)
+                        <a href="{{ asset('uploads/bukti/'.$pending->bukti_transfer) }}" target="_blank" class="text-xs text-blue-500 font-bold hover:underline inline-flex items-center mt-3 uppercase tracking-widest">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                            Lihat Bukti
+                        </a>
+                    @endif
+                </div>
+
+                <div class="flex gap-4">
+                    <form action="{{ route('bendahara.transaksi.terima', $pending->id) }}" method="POST" class="flex-1">
+                        @csrf
+                        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white text-xs font-black py-4 rounded-2xl transition-all shadow-lg shadow-green-100 uppercase tracking-widest">Terima</button>
+                    </form>
+                    <form action="{{ route('bendahara.transaksi.tolak', $pending->id) }}" method="POST" class="flex-1">
+                        @csrf
+                        <button type="submit" class="w-full bg-red-50 hover:bg-red-100 text-red-500 text-xs font-black py-4 rounded-2xl transition-all uppercase tracking-widest">Tolak</button>
+                    </form>
+                </div>
+            </div>
+            @empty
+            <div class="bg-gray-50 rounded-[2.5rem] p-10 text-center border-2 border-dashed border-gray-100">
+                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-sm">✨</div>
+                <p class="text-gray-400 font-bold text-base italic uppercase tracking-widest">Semua pembayaran<br>sudah disetujui!</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</div>
+
+<!-- Modal Simulasi QRIS -->
+<div id="qrisModal" class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center hidden backdrop-blur-md transition-all duration-500">
+    <div class="bg-white rounded-[3rem] p-12 max-w-md w-full mx-4 shadow-2xl relative border-[10px] border-gray-50 scale-100">
+        <!-- Close Button -->
+        <button onclick="document.getElementById('qrisModal').classList.add('hidden')" class="absolute top-8 right-8 text-gray-400 hover:text-black transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <div class="text-center mb-10">
+            <h3 class="text-4xl font-black text-[#003d82] tracking-tighter">Bayar Kas Sendiri</h3>
+            <p class="text-lg text-gray-400 mt-3 font-bold italic uppercase tracking-widest">Nominal: <span class="text-black font-black">Rp 10.000</span></p>
+        </div>
+
+        <!-- Dummy QR Code -->
+        <div class="flex justify-center mb-10">
+            <div class="p-8 bg-white border-4 border-dashed border-gray-100 rounded-[2.5rem] shadow-inner">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Pembayaran+Kas+Dummy" alt="QRIS Dummy" class="w-56 h-56">
+            </div>
+        </div>
+
+        <!-- Form Upload Bukti -->
+        <form action="{{ route('bendahara.bayar') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+            @csrf
+            <div>
+                <label class="block text-xs font-black text-gray-400 mb-4 uppercase tracking-[0.2em] text-center">Upload Bukti Transfer</label>
+                <div class="relative">
+                    <input type="file" name="bukti_transfer" accept="image/*" required
+                        class="block w-full text-sm text-gray-500
+                        file:mr-4 file:py-4 file:px-8
+                        file:rounded-2xl file:border-0
+                        file:text-sm file:font-black
+                        file:bg-[#003d82] file:text-white
+                        hover:file:bg-blue-800 transition-all cursor-pointer border-2 border-gray-100 rounded-[2rem] p-1.5 shadow-sm">
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-[#003d82] text-white font-black py-6 rounded-[2rem] hover:bg-blue-900 transition-all shadow-2xl text-xl uppercase tracking-[0.3em]">
+                Kirim
+            </button>
+        </form>
+    </div>
+</div>
+
+@if(session('success'))
+<script>
+    alert("{{ session('success') }}");
+</script>
+@endif
+
+@endsection

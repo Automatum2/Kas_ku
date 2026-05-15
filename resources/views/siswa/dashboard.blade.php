@@ -1,224 +1,188 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Siswa - Kas-Ku</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="{{ asset('foto/Logo.png') }}">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; color: #1E293B; }
-    </style>
-</head>
-<body class="flex min-h-screen">
+@extends('layouts.main')
 
-    <!-- Sidebar -->
-    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between hidden md:flex sticky top-0 h-screen">
-        <div>
-            <!-- Logo -->
-            <div class="px-6 py-8 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <img src="{{ asset('foto/Logo.png') }}" alt="Logo" class="w-8">
-                    <span class="text-xl font-extrabold text-[#0047FF]">Kas-ku</span>
-                </div>
-                <!-- Toggle Sidebar Icon -->
-                <button class="text-gray-800 hover:text-black">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <rect x="3" y="3" width="18" height="18" rx="4" ry="4" />
-                        <line x1="9" y1="3" x2="9" y2="21" />
-                    </svg>
-                </button>
-            </div>
+@section('title', 'Dashboard Siswa - Kas-Ku')
 
-            <!-- Menu -->
-            <nav class="mt-2 px-4 space-y-2">
-                <a href="{{ route('siswa.dashboard') }}" class="flex items-center gap-3 bg-[#D3E3F1] text-[#1E293B] px-5 py-2.5 rounded-full font-bold transition-colors shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    <span class="text-sm">Dashboard</span>
-                </a>
-                <a href="{{ route('siswa.tentang') }}" class="flex items-center gap-3 text-gray-800 hover:text-black px-5 py-2.5 rounded-full font-semibold transition-colors">
-                    <span class="w-5"></span> <!-- Spacer buat nyamain posisi tulisan Dashboard -->
-                    <span class="text-sm">Tentang</span>
-                </a>
-            </nav>
-        </div>
-
-        <!-- Logout -->
-        <div class="p-6 mb-2">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="flex items-center gap-3 text-gray-800 hover:text-black font-bold transition-colors w-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF4747]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H9" />
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 3H5a2 2 0 00-2 2v14a2 2 0 002 2h10" />
-                    </svg>
-                    <span class="text-xs">Keluar</span>
-                </button>
-            </form>
-        </div>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="flex-1 p-8 md:p-12 overflow-y-auto">
-        
-        <!-- Header -->
-        <header class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
+@section('content')
+<!-- Top Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+    <!-- Card 1: Mulai Bayar Kas -->
+    <div class="md:col-span-2 relative rounded-[2.5rem] overflow-hidden h-80 shadow-2xl group border-4 border-white bg-blue-900">
+        <img src="{{ asset('foto/dashboard/card1.png?v=1') }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        <div class="absolute inset-0 bg-blue-900/40 mix-blend-multiply"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-transparent to-transparent"></div>
+        <div class="absolute inset-0 p-10 flex flex-col justify-between z-10">
             <div>
-                <h1 class="text-3xl font-extrabold text-black mb-1 tracking-tight">Selamat datang, {{ Auth::user()->nis }} !</h1>
-                <p class="text-gray-600 font-medium">Ayo mulai rajin membayar Kas kelas mu !</p>
+                <h2 class="text-4xl font-black text-white drop-shadow-2xl tracking-tight">Mulai bayar Kas</h2>
+                <p class="text-white/90 text-lg drop-shadow-lg font-bold mt-2">Semakin cepat bayar semakin bagus !</p>
             </div>
-            <div class="flex items-center bg-white border border-gray-200 rounded-full pr-6 pl-2 py-1.5 shadow-sm h-fit">
-                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center mr-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <span class="text-sm font-semibold text-gray-700">Terdaftar sebagai <span class="font-bold text-black">Siswa</span></span>
-            </div>
-        </header>
-
-        <!-- Top Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <!-- Card 1 (takes 2 columns) -->
-            <div class="md:col-span-2 relative rounded-3xl overflow-hidden h-64 shadow-lg group">
-                <img src="{{ asset('foto/bayar kas 2.png') }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute inset-0 bg-blue-900/40 mix-blend-multiply"></div>
-                <div class="absolute inset-0 p-8 flex flex-col justify-between">
-                    <div>
-                        <h2 class="text-3xl font-extrabold text-white drop-shadow-md">Mulai bayar Kas</h2>
-                        <p class="text-white/90 text-lg drop-shadow-sm font-medium mt-1">Semakin cepat bayar semakin bagus !</p>
-                    </div>
-                    <div class="flex justify-center mt-auto pb-2">
-                        <button onclick="document.getElementById('qrisModal').classList.remove('hidden')" class="bg-white text-[#003d82] font-extrabold px-16 py-3 rounded-full hover:bg-gray-100 transition-colors shadow-xl text-lg">
-                            Masuk
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 (takes 1 column) -->
-            <div class="relative rounded-3xl overflow-hidden h-64 shadow-lg group">
-                <div class="absolute inset-0 bg-[#E0A86A] opacity-100"></div>
-                <img src="{{ asset('foto/image 15.png') }}" onerror="this.style.display='none';" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay group-hover:scale-105 transition-transform duration-500 opacity-70">
-                <div class="absolute inset-0 p-8 flex flex-col items-center">
-                    <h2 class="text-3xl font-extrabold text-white text-center leading-tight drop-shadow-md">Tabungan<br>Kelas</h2>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- History Column -->
-            <div class="md:col-span-2">
-                <h3 class="text-xl font-extrabold text-black mb-6">History pembayaran Siswa</h3>
-                
-                <div class="space-y-4">
-                    @forelse($myTransactions->take(3) as $transaction)
-                    <div class="bg-white rounded-3xl p-5 flex flex-col sm:flex-row items-center shadow-sm border border-gray-100">
-                        <!-- Icon -->
-                        <div class="w-12 h-12 rounded-full bg-[#003d82] flex items-center justify-center shrink-0 sm:mr-4 mb-3 sm:mb-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                        </div>
-                        
-                        <!-- Details -->
-                        <div class="flex-1 text-center sm:text-left">
-                            <p class="font-extrabold text-black text-lg">{{ Auth::user()->nis }}, Telah membayar Kas</p>
-                            <p class="text-gray-500 text-sm font-medium mt-0.5">{{ \Carbon\Carbon::parse($transaction->tanggal)->translatedFormat('F j, Y') }}</p>
-                        </div>
-                        
-                        <!-- Status Badge -->
-                        <div class="shrink-0 mt-4 sm:mt-0">
-                            @if($transaction->status_transaksi == 'Lunas')
-                                <span class="inline-block bg-[#00FF00] text-black font-extrabold px-6 py-1.5 rounded-full text-xs shadow-sm border-b-2 border-green-700/30 italic uppercase">
-                                    Berhasil !
-                                </span>
-                            @elseif($transaction->status_transaksi == 'Menunggu')
-                                <span class="inline-block bg-yellow-400 text-black font-extrabold px-6 py-1.5 rounded-full text-xs shadow-sm border-b-2 border-yellow-600/30 italic uppercase">
-                                    Diproses
-                                </span>
-                            @else
-                                <span class="inline-block bg-red-500 text-white font-extrabold px-6 py-1.5 rounded-full text-xs shadow-sm border-b-2 border-red-700/30 italic uppercase">
-                                    Ditolak
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    @empty
-                    <div class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100">
-                        <p class="text-gray-500 font-medium">Belum ada history pembayaran.</p>
-                    </div>
-                    @endforelse
-                </div>
-
-                <div class="mt-6 text-center">
-                    <a href="#" class="text-[#003d82] font-bold text-sm hover:underline">Lihat semua History</a>
-                </div>
-            </div>
-
-            <!-- Gatau gambarnya placeholder -->
-            <div class="md:col-span-1">
-                <div class="bg-[#E2E8F0] rounded-3xl h-full min-h-[300px] flex items-center justify-center shadow-inner mt-12 md:mt-0">
-                    <span class="text-2xl font-black text-black">gatau gambarnya</span>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Modal Simulasi QRIS -->
-    <div id="qrisModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center hidden">
-        <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl transform transition-all relative">
-            <!-- Close Button -->
-            <button onclick="document.getElementById('qrisModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-
-            <div class="text-center mb-6">
-                <h3 class="text-2xl font-extrabold text-[#003d82]">Pembayaran Kas</h3>
-                <p class="text-sm text-gray-500 mt-1 font-medium">Scan QRIS ini untuk membayar kas sebesar Rp 10.000</p>
-            </div>
-
-            <!-- Dummy QR Code -->
-            <div class="flex justify-center mb-6">
-                <div class="p-4 bg-white border-2 border-dashed border-gray-300 rounded-2xl shadow-sm">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pembayaran+Kas+Dummy" alt="QRIS Dummy" class="w-40 h-40">
-                </div>
-            </div>
-
-            <!-- Form Upload Bukti -->
-            <form action="{{ route('siswa.bayar') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="mb-5">
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Upload Bukti Transfer (Simulasi)</label>
-                    <input type="file" name="bukti_transfer" accept="image/*" required
-                        class="block w-full text-sm text-gray-500
-                        file:mr-4 file:py-2.5 file:px-4
-                        file:rounded-full file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-blue-50 file:text-[#003d82]
-                        hover:file:bg-blue-100 transition-all cursor-pointer">
-                </div>
-
-                <button type="submit" class="w-full bg-[#003d82] text-white font-bold py-3 rounded-full hover:bg-blue-800 transition-colors shadow-md">
-                    Kirim Pembayaran
+            <div class="flex justify-center">
+                <button onclick="document.getElementById('qrisModal').classList.remove('hidden')" 
+                    class="bg-white text-[#003d82] font-black px-24 py-4 rounded-2xl hover:bg-gray-50 transition-all shadow-2xl text-xl transform hover:scale-105 active:scale-95 uppercase tracking-widest">
+                    Bayar
                 </button>
-            </form>
+            </div>
         </div>
     </div>
 
-    <!-- Alert Notifikasi -->
-    @if(session('success'))
-    <script>
-        alert("{{ session('success') }}");
-    </script>
-    @endif
+    <!-- Card 2: Tabungan Kelas -->
+    <a href="#" class="relative rounded-[2.5rem] overflow-hidden h-80 shadow-2xl group cursor-pointer border-4 border-white bg-[#E0A86A]">
+        <img src="{{ asset('foto/dashboard/tabungan-kelas.png?v=1') }}" loading="lazy" 
+             class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110">
+        <div class="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent"></div>
+    </a>
+</div>
 
-</body>
-</html>
+<!-- Bottom Section Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <!-- History Column -->
+    <div class="md:col-span-2">
+        <h3 class="text-3xl font-black text-gray-900 mb-8 tracking-tighter">History pembayaran Siswa</h3>
+        
+        <div class="space-y-6">
+            @forelse($myTransactions->take(3) as $transaction)
+            <div class="bg-white rounded-[2.5rem] p-8 flex flex-col sm:flex-row items-center shadow-sm border-2 border-gray-50 hover:shadow-xl transition-all duration-500 group">
+                <!-- Icon Box -->
+                <div class="w-16 h-16 rounded-2xl bg-[#003d82] flex items-center justify-center shrink-0 sm:mr-8 mb-4 sm:mb-0 shadow-lg group-hover:rotate-6 transition-transform">
+                    <img src="{{ asset('foto/dashboard/udh-bayar.png?v=1') }}" alt="Paid" class="w-10 h-10 object-contain brightness-0 invert">
+                </div>
+                
+                <!-- Details -->
+                <div class="flex-1 text-center sm:text-left">
+                    <p class="font-black text-gray-900 text-2xl tracking-tight">{{ Auth::user()->nis }}, Telah membayar Kas</p>
+                    <p class="text-gray-400 text-lg font-bold mt-1">{{ \Carbon\Carbon::parse($transaction->tanggal)->translatedFormat('F j, Y') }}</p>
+                </div>
+                
+                <!-- Status Badge -->
+                <div class="shrink-0 mt-5 sm:mt-0">
+                    @if($transaction->status_transaksi == 'Lunas')
+                        <span class="inline-block bg-[#00FF00] text-black font-black px-10 py-3 rounded-full text-base shadow-lg border-b-4 border-green-700/20 italic tracking-tighter">
+                            Berhasil !
+                        </span>
+                    @elseif($transaction->status_transaksi == 'Menunggu')
+                        <span class="inline-block bg-yellow-400 text-black font-black px-10 py-3 rounded-full text-base shadow-lg border-b-4 border-yellow-600/20 italic tracking-tighter">
+                            Diproses
+                        </span>
+                    @else
+                        <span class="inline-block bg-red-500 text-white font-black px-10 py-3 rounded-full text-base shadow-lg border-b-4 border-red-700/20 italic tracking-tighter">
+                            Ditolak
+                        </span>
+                    @endif
+                </div>
+            </div>
+            @empty
+            <div class="bg-white rounded-[2.5rem] p-16 text-center shadow-sm border-2 border-dashed border-gray-100">
+                <p class="text-gray-300 font-black text-2xl">Belum ada history pembayaran.</p>
+            </div>
+            @endforelse
+        </div>
+
+        <div class="mt-12 text-center">
+            <a href="#" class="text-[#0047FF] font-black text-lg hover:underline tracking-widest uppercase">Lihat semua History</a>
+        </div>
+    </div>
+
+    <!-- Card 3: Leaderboard Siswa Rajin -->
+    <div class="md:col-span-1">
+        <div class="bg-white rounded-[2.5rem] h-full min-h-[450px] p-8 shadow-2xl relative overflow-hidden border-4 border-white flex flex-col">
+            <!-- Header Card -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-black text-gray-900 tracking-tighter">Siswa Ter-Rajin</h3>
+                <p class="text-gray-400 text-sm font-bold uppercase tracking-widest mt-1">6 Bulan Terakhir</p>
+            </div>
+
+            <!-- List Peringkat -->
+            <div class="space-y-4 flex-1">
+                @forelse($rankingSiswa as $index => $rank)
+                <div class="flex items-center gap-4 p-4 rounded-3xl {{ $index == 0 ? 'bg-yellow-50 border-2 border-yellow-100' : 'bg-gray-50 border-2 border-transparent' }} transition-all">
+                    <!-- Rank Number/Icon -->
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-sm
+                        {{ $index == 0 ? 'bg-yellow-400 text-white' : ($index == 1 ? 'bg-gray-300 text-gray-600' : 'bg-orange-300 text-white') }}">
+                        @if($index == 0)
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                        @else
+                            <span class="text-xl font-black">{{ $index + 1 }}</span>
+                        @endif
+                    </div>
+
+                    <!-- User Info -->
+                    <div class="flex-1 min-w-0">
+                        <p class="font-black text-gray-900 truncate tracking-tight text-lg">{{ $rank->user->nama_lengkap ?? $rank->user->nis }}</p>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-widest">{{ $rank->total_bayar }}x Pembayaran</p>
+                    </div>
+
+                    <!-- Badge -->
+                    @if($index == 0)
+                        <div class="bg-yellow-400/20 text-yellow-600 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter italic">MVP!</div>
+                    @endif
+                </div>
+                @empty
+                <div class="flex flex-col items-center justify-center h-full text-center p-8 opacity-50">
+                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-3xl mb-4">🏆</div>
+                    <p class="text-gray-400 font-bold italic">Belum ada data peringkat.</p>
+                </div>
+                @endforelse
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Simulasi QRIS -->
+<div id="qrisModal" class="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center hidden backdrop-blur-md transition-all duration-500">
+    <div class="bg-white rounded-[3rem] p-12 max-w-md w-full mx-4 shadow-2xl relative border-[10px] border-gray-50 scale-100">
+        <!-- Close Button -->
+        <button onclick="document.getElementById('qrisModal').classList.add('hidden')" class="absolute top-8 right-8 text-gray-400 hover:text-black transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <div class="text-center mb-10">
+            <h3 class="text-4xl font-black text-[#003d82] tracking-tighter">Pembayaran Kas</h3>
+            <p class="text-lg text-gray-400 mt-3 font-bold italic uppercase tracking-widest">Nominal: <span class="text-black font-black">Rp 10.000</span></p>
+        </div>
+
+        <!-- Dummy QR Code -->
+        <div class="flex justify-center mb-10">
+            <div class="p-8 bg-white border-4 border-dashed border-gray-100 rounded-[2.5rem] shadow-inner">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Pembayaran+Kas+Dummy" alt="QRIS Dummy" class="w-56 h-56">
+            </div>
+        </div>
+
+        <!-- Form Upload Bukti -->
+        <form action="{{ route('siswa.bayar') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+            @csrf
+            <div>
+                <label class="block text-xs font-black text-gray-400 mb-4 uppercase tracking-[0.2em] text-center">Upload Bukti Transfer</label>
+                <div class="relative">
+                    <input type="file" name="bukti_transfer" accept="image/*" required
+                        class="block w-full text-sm text-gray-500
+                        file:mr-4 file:py-4 file:px-8
+                        file:rounded-2xl file:border-0
+                        file:text-sm file:font-black
+                        file:bg-[#003d82] file:text-white
+                        hover:file:bg-blue-800 transition-all cursor-pointer border-2 border-gray-100 rounded-[2rem] p-1.5 shadow-sm">
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-[#003d82] text-white font-black py-6 rounded-[2rem] hover:bg-blue-900 transition-all shadow-2xl text-xl uppercase tracking-[0.3em]">
+                Kirim
+            </button>
+        </form>
+    </div>
+</div>
+
+@if(session('success'))
+<div id="successToast" class="fixed bottom-12 right-12 bg-green-500 text-white px-10 py-5 rounded-[2rem] shadow-2xl font-black z-[110] animate-bounce text-lg">
+    {{ session('success') }}
+</div>
+<script>
+    setTimeout(() => {
+        document.getElementById('successToast').remove();
+    }, 5000);
+</script>
+@endif
+
+@endsection
