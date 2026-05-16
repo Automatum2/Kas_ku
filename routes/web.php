@@ -27,5 +27,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/siswa/dashboard', [\App\Http\Controllers\Siswa\DashboardController::class, 'index'])->name('siswa.dashboard');
     Route::post('/siswa/bayar', [\App\Http\Controllers\Siswa\DashboardController::class, 'bayar'])->name('siswa.bayar');
     Route::get('/siswa/tentang', [\App\Http\Controllers\Siswa\DashboardController::class, 'tentang'])->name('siswa.tentang');
+    
+    });
 
-});
+   
+    Route::get('/lapor-bendahara', function () {
+        return view('lapor_bendahara');
+    });
